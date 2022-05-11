@@ -2,12 +2,13 @@ from rest_framework.generics import RetrieveDestroyAPIView, ListCreateAPIView
 
 from restapi import models, serializers
 
-# Create your views here.
 
+# Create your views here.
 
 class ExpenseListCreate(ListCreateAPIView):
     serializer_class = serializers.Expense
     queryset = models.Expense.objects.all()
+    filterset_fields = ["category", "merchant"]
 
 
 class ExpenseRetrieveDelete(RetrieveDestroyAPIView):
