@@ -1,6 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from rest_framework_api_key.models import APIKey
+from rest_framework.test import APIClient
+
 from restapi import models
 
 # Create your tests here.
@@ -22,6 +25,11 @@ class TestModels(TestCase):
 
 
 class TestViews(TestCase):
+    def setUp(self):
+        api_key, key = APIKey.objects.create_key(name="expense-service")
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION=f"Api-Key {key}")
+
     def test_expense_create(self):
         payload = {
             "amount": 50.0,
